@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/MenuScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/TrainingScene.unity
+    guid: 89552b5bd5b15a943861f17948fb124e
+  - enabled: 1
+    path: Assets/Scenes/ExamScene.unity
+    guid: 3f91db93331274345bf8773a8420b4c2
+  - enabled: 1
+    path: Assets/Scenes/SandboxScene.unity
+    guid: 45f4ed9453273cd4a877c89062319b47
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 022a1b26b335ffe40bb18369c0149a25,
       type: 2}
