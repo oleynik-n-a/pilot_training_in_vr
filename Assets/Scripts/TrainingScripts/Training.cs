@@ -12,18 +12,20 @@ namespace TrainingScripts
         [SerializeField] private Material red;
         [SerializeField] private GameObject tablet;
     
-        void Start()
+        private void Start()
         {
             var panels = gameObject.transform.GetChild(gameObject.transform.childCount - 1);
             var buttonsList = new List<GameObject>();
             var buttons = new Queue<GameObject>();
             var random = new System.Random();
             
-            for (int i = 0; i < 1; ++i) // TODO: make more panels (panels.childCount).
+            for (int i = 0; i < panels.childCount; ++i)
             {
                 for (int j = 0; j < panels.GetChild(i).childCount; ++j)
                 {
-                    buttonsList.Add(panels.GetChild(i).GetChild(j).gameObject);
+                    var obj = panels.GetChild(i).GetChild(j);
+                    obj.name = obj.name.Substring(obj.name.IndexOf('.') + 2);
+                    buttonsList.Add(obj.gameObject);
                 }
             }
 
@@ -37,7 +39,7 @@ namespace TrainingScripts
             
             tablet.GetComponent<TrainingTabletController>().InitializeInfo(buttons.Peek().name);
             
-            for (int i = 0; i < 1; ++i) // TODO: make more panels (panels.childCount).
+            for (int i = 0; i < panels.childCount; ++i) 
             {
                 var panel = panels.GetChild(i);
                 for (int j = 0; j < panel.childCount; ++j)
@@ -46,6 +48,7 @@ namespace TrainingScripts
                     var indicator = obj.GetChild(panel.GetChild(j).childCount - 1);
                     var xrSimpleInteractable = indicator.GetComponent<XRSimpleInteractable>();
                 
+                    obj.name = obj.name.Substring(obj.name.IndexOf('.') + 2);
                     xrSimpleInteractable.hoverEntered.AddListener(delegate
                     {
                         tablet.GetComponent<TrainingTabletController>().IncreaseTotal();
@@ -73,12 +76,25 @@ namespace TrainingScripts
                         buttons.Dequeue();
                         if (buttons.Count == 0)
                         {
-                            SceneManager.LoadScene(0);
+                            EndTraining();
                             return;
                         }
                         indicator.GetComponent<MeshRenderer>().material = orange;
                         tablet.GetComponent<TrainingTabletController>().HideInfo(buttons.Peek().name);
                     });
+                }
+            }
+        }
+
+        private void EndTraining()
+        {
+            var panels = gameObject.transform.GetChild(gameObject.transform.childCount - 1);
+            for (int i = 0; i < 1; ++i)
+            {
+                var panel = panels.GetChild(i);
+                for (int j = 0; j < panel.childCount; ++j)
+                {
+                    panel.GetChild(j).GetChild(panel.GetChild(j).childCount - 1).gameObject.SetActive(false);
                 }
             }
         }

@@ -21,6 +21,7 @@ namespace SandboxScripts
                     var indicator = obj.GetChild(panel.GetChild(j).childCount - 1);
                     var xrSimpleInteractable = indicator.GetComponent<XRSimpleInteractable>();
                 
+                    obj.name = obj.name.Substring(obj.name.IndexOf('.') + 2);
                     xrSimpleInteractable.hoverEntered.AddListener(delegate
                     {
                         indicator.GetComponent<MeshRenderer>().material = green;
