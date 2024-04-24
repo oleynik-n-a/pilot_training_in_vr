@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace ExamScripts
@@ -12,18 +11,20 @@ namespace ExamScripts
         [SerializeField] private Material red;
         [SerializeField] private GameObject tablet;
     
-        void Start()
+        private void Start()
         {
             var panels = gameObject.transform.GetChild(gameObject.transform.childCount - 1);
             var buttonsList = new List<GameObject>();
             var buttons = new Queue<GameObject>();
             var random = new System.Random();
             
-            for (int i = 0; i < 1; ++i) // TODO: make more panels (panels.childCount).
+            for (int i = 0; i < panels.childCount; ++i)
             {
                 for (int j = 0; j < panels.GetChild(i).childCount; ++j)
                 {
-                    buttonsList.Add(panels.GetChild(i).GetChild(j).gameObject);
+                    var obj = panels.GetChild(i).GetChild(j);
+                    obj.name = obj.name.Substring(obj.name.IndexOf('.') + 2);
+                    buttonsList.Add(obj.gameObject);
                 }
             }
 
@@ -37,7 +38,7 @@ namespace ExamScripts
             
             tablet.GetComponent<ExamTabletController>().UpdateInfo(buttons.Peek().name);
             
-            for (int i = 0; i < 1; ++i) // TODO: make more panels (panels.childCount).
+            for (int i = 0; i < panels.childCount; ++i)
             {
                 var panel = panels.GetChild(i);
                 for (int j = 0; j < panel.childCount; ++j)
@@ -80,7 +81,7 @@ namespace ExamScripts
             }
         }
 
-        void GetResults()
+        private void GetResults()
         {
             tablet.GetComponent<ExamTabletController>().ShowScore();
             var panels = gameObject.transform.GetChild(gameObject.transform.childCount - 1);
