@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace ExamScripts
@@ -48,7 +47,6 @@ namespace ExamScripts
                     var indicator = obj.GetChild(panel.GetChild(j).childCount - 1);
                     var xrSimpleInteractable = indicator.GetComponent<XRSimpleInteractable>();
                 
-                    obj.name = obj.name.Substring(obj.name.IndexOf('.') + 2);
                     xrSimpleInteractable.hoverEntered.AddListener(delegate
                     {
                         tablet.GetComponent<ExamTabletController>().IncreaseTotal();
